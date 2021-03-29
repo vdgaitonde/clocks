@@ -1,53 +1,52 @@
+
 <html>
 <head>
 	<title>Project: Time Machine</title>
-	<script src="dist/2.9.4/Chart.js"></script>
-	<script src="dist/utils.js"></script>
 
-	<div id="canvas-holder" style="width:40%">
-		<canvas id="chart-area"></canvas>
-	</div>
-	<button id="CurrentTime">Show Time</button>
-	<h4 id="TimeBox"></h4>
-	
-	<div>
-		<br/><a href="clock_1ring.html">Clock Simple</a><br/>
-		<br/><a href="clock_3rings.html">3 Ring Clock</a><br/>
-		<br/><a href="clock_spiderman.html">Spiderman Clock</a><br/>
-	</div>
-	
-	<script>
-		
-		var chartColors = {
-			red: 'rgb(255, 99, 132)',
-			orange: 'rgb(255, 159, 64)',
-			yellow: 'rgb(255, 205, 86)',
-			green: 'rgb(75, 192, 192)',
-			blue: 'rgb(54, 162, 235)',
-			purple: 'rgb(153, 102, 255)',
-			grey: 'rgb(201, 203, 207)'
-		};
-		var colorNames = Object.keys(window.chartColors);
-		var showDate = false;
-
+	<script type="text/javascript">
 		window.onload = function() {
+			document.getElementById('TimeBox').innerHTML = "Clock: 1 Ring";	 
 		};	
 
-		document.getElementById('CurrentTime').addEventListener('click', function() {
-			
-			if(showDate == true) {
-				document.getElementById('TimeBox').innerHTML = "";
-				document.getElementById('CurrentTime').innerHTML = "Show Time";
-				showDate = false;
-			} else {
-				document.getElementById('TimeBox').innerHTML = new Date();
-				document.getElementById('CurrentTime').innerHTML = "Hide Time";
-				showDate = true;
-			}
-			
+		document.getElementById("clock1ring").addEventListener('click', function() {
+			var loc = "clock_1ring.html";
+			document.getElementById('TimeBox').innerHTML = "Clock: 1 Ring";	 
+			document.getElementById('TimeBoxIFRAME').src = loc;	 
 		});
+
+		document.getElementById('clock3rings').addEventListener('click', function() {
+			var loc = "clock_3rings.html";
+			document.getElementById('TimeBox').innerHTML = "Clock: 3 Rings";	 
+			document.getElementById('TimeBoxIFRAME').src = loc;	 
+		});
+		 
+		document.getElementById('clockspiderman').addEventListener('click', function() {
+			var loc = "clock_spiderman.html";
+			document.getElementById('TimeBox').innerHTML = "Clock: Spiderman";	 
+			document.getElementById('TimeBoxIFRAME').src = loc;	 
+		});
+		 
 		 
 	</script>
 </head>
-<body></body>
+<body>
+	<div id="canvas-holder" style="width:40%">
+		<canvas id="chart-area"></canvas>
+	</div>
+	
+	<table width=100% height=100%>
+		<tr width=100% height=100%>
+			<td width=30% height=100%> 
+				<h2>Project: Time Machine</h2>
+				<button id="clock1ring">Show 1 Ring Clock</button> <br/>		
+				<button id="clock3rings">Show 3 Ring Clock</button> <br/>
+				<button id="clockspiderman">Show Spiderman</button> <br/>
+			</td>
+			<td width=80% height=100%> 
+				<p id="TimeBox"></p>
+				<iframe id="TimeBoxIFRAME" src="./clock_1ring.html" width=100% height=100%/>
+			</td>
+		</tr>
+	</table>
+</body>
 </html>
