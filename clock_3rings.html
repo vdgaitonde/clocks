@@ -6,296 +6,220 @@
     <script src="dist/utils.js"></script>
  
     <div>
-		<p align="center" style="font-family: 'Indie Flower', cursive; font-size:50px; color:red;" id="clockname">  </p>
-		<p align="center" style="font-family: 'Indie Flower', cursive; font-size:50px; color:red;" id="clockdate">  </p>
 		<canvas id="myChart"></canvas>
-		<p align="center" style="font-family: 'Indie Flower', cursive; font-size:50px; color:black;" id="clocktime">  </p>
-		
 	</div>
 	
 <script>
 
 
 var chartColors = {
-	red: 'rgba(255, 0, 0, 0.99)',
-	orange: 'rgba(255, 159, 64, 0.2)',
-	yellow: 'rgba(255, 205, 86, 0.2)',
-	green: 'rgba(75, 192, 192, 0.2)',
-	blue: 'rgba(50, 100, 255, 0.99)',
-	purple: 'rgba(153, 102, 255, 0.2)',
-	grey: 'rgba(201, 203, 207, 0.2)',
-	grey1: 'rgba(201, 203, 207, 0.2)',
-	grey2: 'rgba(201, 213, 217, 0.2)',
-	grey3: 'rgba(201, 223, 227, 0.2)',
-	black: 'rgba(0, 0, 0, 0.5)',
-
-	white_100: 'rgba(255, 255, 255, 0.25)',
-	yellow_90: 'rgba(255, 205, 86, 0.75)',
-	red_90: 'rgba(255, 99, 99, 0.5)',
-	blue_90: 'rgba(54, 162, 235, 0.5)'
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)',
+	grey1: 'rgb(201, 203, 207)',
+	grey2: 'rgb(201, 213, 217)',
+	grey3: 'rgb(201, 223, 227)',
+	black: 'rgb(0, 0, 0)'
 };
 
 function randomScalingFactor() {
 	return Math.round(Math.random() * 100);
 }
 
-
-function getSecondsDataSet(x) {
-    
-    var ret = new Array(); 
-    
-	ret[ 0 ] = 100;
-	for( var i = 0; i < 11; i ++ ) {
-        if( x >= ((i + 1) * 5) ) ret[ i + 1] = 100;
-        else if ( x < (i * 5) )  ret [ i + 1] = 0;
-        else ret [ i + 1] = (x % 5) * 20; 
-
-		ret[ i + 1] = 75 + (ret[ i + 1] / 4);
-
-		//special handling for 56 to 60s
-		if( x >= 55 && i == 10) ret[ 0 ] = ( 75 + ( (x % 5) * 20 ) / 4);
-    }
-
-
-    //alert(ret); 
-    return ret;
-}
-
-function getMinutesDataSet(x) {
-     
-	 var ret = new Array(); 
-	 ret[ 0 ] = 75;
-	 for( var i = 0; i < 11; i ++ ) {
-		 if( x >= ((i + 1) * 5) ) ret[ i + 1] = 100;
-		 else if ( x < (i * 5) )  ret [ i + 1] = 0;
-		 else ret [ i + 1] = (x % 5) * 20; 
-
-		 ret[ i + 1] = 50 + (ret[ i + 1] / 4);
-
-		//special handling for 56 to 60m
-		if( x >= 55 && i == 10) ret[ 0 ] = ( 50 + ( (x % 5) * 20 ) / 4);
-	 }
-	 
-	 return ret;
- }
-
- function getHoursDataSet(x) {
- 	var ret = new Array(); 
-	ret[ 0 ] = 50;
-	for( var i = 0; i < 11; i ++ ) {
-		 if( x > ( i ) ) ret[ i + 1] = 50;
-		 else  ret [i + 1] = 0;
-
-		 //ret[ i + 1] = 25 + (ret[ i + 1] / 4)
-	 }
- 	 return ret;
- }
-
 var color = Chart.helpers.color;
 var config = {
-	//type: 'doughnut',
+	type: 'doughnut',
 	//type: 'pie',
-	type: 'radar',
+	//type: 'radar',
 	//type: 'bar',
-
-	//labels: ['seconds', 'minutes', 'hours'],
-
 	data: {
-		
-		labels: ['12', '1', '2', '3', '4',  '5', '6', '7', '8', '9', '10', '11'],
-		//labels: ['seconds', 'minutes', 'hours'],
-
+		labels: ['0', 'seconds'],
 		datasets: [{
-			data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 ],
-			label: 'hours',
-			tension: 0,
-			spanGaps: 50,
-
+			data: [0, 0],
 			backgroundColor: [
-				window.chartColors.white_100,
+				window.chartColors.blue,
+				window.chartColors.grey1
 			],
 			borderColor: [
 				window.chartColors.black,
+				window.chartColors.grey1
 			]
 		},
 		
-		{ 
-			data: [75,75,75,75,75,75,75,75,75,75,75,75  ],
-			label: 'minutes',
-			spanGaps: 50,
-
+		{ data: [5, 95],
 			backgroundColor: [
-				window.chartColors.blue_90,
+				window.chartColors.green,
+				window.chartColors.grey2
 			],
 			borderColor: [
-				window.chartColors.blue,
+				window.chartColors.black,
+				window.chartColors.grey2
 			] 
 		},
 		
-		{ 
-			data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100,100, 100],
-			label: 'seconds',
-			tension: 0,
-			spanGaps: 50,
-
+		{ data: [5, 95],
 			backgroundColor: [
-				window.chartColors.red_90,
+				window.chartColors.yellow,
+				window.chartColors.grey3
 			],
 			borderColor: [
-				window.chartColors.red,
+				window.chartColors.black,
+				window.chartColors.grey3
 			] 
 			 
 		}
+
+	
 		],
-		
-		 
+		labels: [
+			//'Green',
+			//'Blue'
+		]
 	},
 	//plugins: [ChartRough],
-	 
 	options: {
-		//responsive: false, 
-
-		 
-	
-		
-		legend: false,
-		tooltips: {enabled: false},
-    	hover: {mode: null},
-
-		//scale.ticks.stepSize: 25,
-
 		title: {
 			display: true,
-			text: '00:00:00'
+			text: 'Clock'
 		},
 		animation: {
 			animateScale: false,
 			animateRotate: false
 		},
-		scale: {
-      ticks: {
-        display: true,
-        min: 0,
-        max: 100,
-        stepSize: 5,
-        fontSize: 25,
-		fontWeight: 10,
-		padding: 50, 
-		
-		fontColor: "#000",
-		borderColor: "#fff",
-		z: 0,
-		
-
-        callback: function(value, index, values) {
-			
-			var AXES_myDate = new Date(); 
-			var AXES_hours = AXES_myDate.getHours();  //if (AXES_hours > 11) {  AXES_hours = AXES_hours - 12 } ;
- 	  	  	var AXES_minutes = AXES_myDate.getMinutes(); 
-			var AXES_seconds = AXES_myDate.getSeconds();  
-			
-			var str = ( AXES_hours-12 < 10 ? ("0"+(AXES_hours-12)):(AXES_hours-12)) + ":" +
-			( AXES_minutes < 10 ? "0"+AXES_minutes:AXES_minutes ) + ":" +
-			( AXES_seconds < 10 ? "0"+AXES_seconds:AXES_seconds ) + " " + ((AXES_hours<12)?"am":"pm");
-			
-
-          switch (value) {
-           
-			case 5:
-				return str;
-				break;		
-			 /*
-			 case 50:
-              return AXES_hours;
-              break;
-            case 75:
-              return AXES_minutes;
-              break;
-           
-			case 100:
-              return AXES_seconds;
-              break;
-			*/
-			default:
-              return "";
-          }
-        }
-      }},
-
-	scales: {
-			showLabelBackdrop: false,
-			stepSize: 25,
-
-      	  r: {
-          	  angleLines: {
-                display: false
-          	  },
-      	      suggestedMin: 0,
-          	  suggestedMax: 0
-      	  }
-   		 }
-		
+			tooltips: {enabled: false},
+    		hover: {mode: null}
 	}
 };
 
 //Chart.defaults.plugins.tooltip.enabled = false;
-Chart.defaults.global.defaultFontFamily = '"Indie Flower", cursive';
+ Chart.defaults.global.defaultFontFamily = '"Indie Flower", cursive';
 Chart.defaults.global.defaultFontSize = 50;
-
-document.getElementById('clockname').innerHTML = "Spiderman Clock"; 
-//config.options.title.text =  myDate;  
 
 window.onload = function() {
 	
 
 	
 	var ctx = document.getElementById('myChart').getContext('2d');
-	window.myChart = new Chart(ctx, config);
+	
 	var myFunc = setInterval(function() {
-	    window.myChart = new Chart(ctx, config);
 
 		config.options.animation.animateScale = false;
 		config.options.animation.animateRotate = false;
 
-		var myDate = new Date(); 
-		
-		var hours = myDate.getHours();  if (hours > 11) {  hours = hours - 12 } ;
+		var myDate = new Date(); //"Monday 1/1/2020 12:34:56");
+		//var myDateStr = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}); // 08/19/2020 (month and day with two digits)
+
+		var day = myDate.getDate();  
+		var month = myDate.getMonth() + 1;  
+		var year = myDate.getFullYear();  
+ 	    
+		var hours = myDate.getHours();  if (hours > 11) {  hours = hours - 12} ;
  	    var minutes = myDate.getMinutes(); 
 		var seconds = myDate.getSeconds();  
 
-		//"Monday 1/1/2020 12:34:56");
-		//var myDateStr = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}); // 08/19/2020 (month and day with two digits)
-		//var day = myDate.getDate();  
-		//var month = myDate.getMonth() + 1;  
-		//var year = myDate.getFullYear();  
-		//var tz = myDate.getTimezoneOffset();
+		var tz = myDate.getTimezoneOffset();
 
-		
-		
-		config.options.title.text =  myDate;  
+		//document.getElementById("nowTime").innerHTML = month + "/" + day + "/" + year + "<br/>" + hours + ":" + minutes + ":" + seconds; //myDate;  
+		//document.getElementById("nowTime").innerHTML = myDate;  
+
+		config.options.title.text =  myDate; //month + "/" + day + "/" + year + "   |   " + hours + ":" + minutes + ":" + seconds; // + " GMT " + tz; 
 
 		if (seconds == 0 ) {
 			config.options.animation.animateScale = false;
 			config.options.animation.animateRotate = false;
-			//window.myChart = new Chart(ctx, config);
 		}
-			 
-		config.data.datasets[2].data = getSecondsDataSet( seconds );
-		config.data.datasets[1].data = getMinutesDataSet( minutes );
-		config.data.datasets[0].data = getHoursDataSet( hours );
 		
-	
-		window.myChart.update(0);
+		secondsRatio = seconds / 0.6;
+		minutesRatio = minutes / 0.6 +  + (secondsRatio / 60);
+		hoursRatio = (( hours / 0.6 ) * 5 ) + (minutesRatio / 12);
 
-		//window.myChart = new Chart(ctx, config);
+		config.data.datasets[0].data[0] = secondsRatio;  
+		config.data.datasets[0].data[1] = 100-secondsRatio; 
+
+		config.data.datasets[1].data[0] = minutesRatio;  
+		config.data.datasets[1].data[1] = 100-minutesRatio; 
+
+		config.data.datasets[2].data[0] = hoursRatio;  
+		config.data.datasets[2].data[1] = 100-hoursRatio; 
+
+		window.myChart = new Chart(ctx, config);
 	
 	}, 1000);
 };
 
 
 
+document.getElementById('randomizeData').addEventListener('click', function() {
+	config.data.datasets.forEach(function(dataset) {
+		dataset.data = dataset.data.map(function() {
+			return randomScalingFactor();
+		});
+	});
+	window.myChart.update();
+});
+
 var colorNames = Object.keys(chartColors);
- </script>
+document.getElementById('addDataset').addEventListener('click', function() {
+	
+	var colorName = colorNames[config.data.datasets.length % colorNames.length];
+	var newColor = chartColors[colorName];
+	var newDataset = {
+		data: [],
+		backgroundColor: [],
+		borderColor: []
+	};
+
+	for (var index = 0; index < config.data.labels.length; ++index) {
+		newDataset.data.push(randomScalingFactor());
+
+		var colorName = colorNames[index % colorNames.length];
+		var newColor = window.chartColors[colorName];
+		newDataset.backgroundColor.push(newColor);
+		newDataset.borderColor.push(newColor);
+	}
+
+	config.data.datasets.push(newDataset);
+	window.myChart.update();
+});
+
+document.getElementById('removeDataset').addEventListener('click', function() {
+	config.data.datasets.pop();
+	window.myChart.update();
+});
+
+document.getElementById('addData').addEventListener('click', function() {
+	if (config.data.datasets.length > 0) {
+		var colorName = colorNames[config.data.datasets[0].data.length % colorNames.length];
+		var newColor = window.chartColors[colorName];
+
+		config.data.labels.push(colorName.charAt(0).toUpperCase() + colorName.slice(1));
+
+		config.data.datasets.forEach(function(dataset) {
+			dataset.data.push(randomScalingFactor());
+			dataset.backgroundColor.push(newColor);
+			dataset.borderColor.push(newColor);
+		});
+
+		window.myChart.update();
+	}
+});
+
+document.getElementById('removeData').addEventListener('click', function() {
+	config.data.labels.splice(-1, 1); // remove the label first
+
+	config.data.datasets.forEach(function(dataset) {
+		dataset.data.pop();
+		dataset.backgroundColor.pop();
+		dataset.borderColor.pop();
+	});
+
+	window.myChart.update();
+});
+</script>
 
 
 </head>
