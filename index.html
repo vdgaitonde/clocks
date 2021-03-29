@@ -4,16 +4,13 @@
 	<title>Project: Time Machine</title>
 	<script src="dist/2.9.4/Chart.js"></script>
 	<script src="dist/utils.js"></script>
-
-	<div id="canvas-holder" style="width:40%">
-		<canvas id="chart-area"></canvas>
-	</div>	
-	
-	<div>
-	<br/><button id="clock_1ring">Show 1 Ring</button><br/>
-        <br/><button id="clock_3rings">Show 3 Ring</button><br/>
-        <br/><button id="clock_spiderman">Show Spiderman</button><br/>
+	<div style="width:40%">
+		<h2>Project: Time Machine</h2>
+		<br/><button id="clock_1ring">Show 1 Ring</button><br/>
+		<br/><button id="clock_3rings">Show 3 Ring</button><br/>
+		<br/><button id="clock_spiderman">Show Spiderman</button><br/>
 	</div>
+	
 	
 	<script>
 		
@@ -32,8 +29,6 @@
 		window.onload = function() {
 		};	
 
-		
-		
         document.getElementById('clock_1ring').addEventListener('click', function() {
  			var loc = "clock_1ring.html";
 			document.getElementById('TimeBox').innerHTML = "Clock: 1 Ring";	 
