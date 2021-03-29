@@ -1,0 +1,170 @@
+<html>
+<head>
+
+    <script src="dist/2.9.4/Chart.js"></script>
+    <script src="dist/2.9.4/Chart.min.js"></script>
+    <script src="dist/utils.js"></script>
+ 
+    <div>
+		<canvas id="myChart"></canvas>
+	</div>
+	
+<script>
+
+
+var chartColors = {
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)',
+	grey1: 'rgb(201, 203, 207)',
+	grey2: 'rgb(201, 213, 217)',
+	grey3: 'rgb(201, 223, 227)',
+	black: 'rgb(0, 0, 0)'
+};
+
+function randomScalingFactor() {
+	return Math.round(Math.random() * 100);
+}
+
+function getSecondsDataSet(x) {
+    alert( "SECS: " + x)
+    var ret = new Array(); 
+    for( var i = 0; i < 12; i ++ ) {
+        if( x >= ((i + 1) * 5) ) ret[ i ] = 100;
+        else if ( x < (i * 5) )  ret [ i ] = 0;
+        else ret [ i ] = (x % 5) * 20; 
+    }
+    alert( ret )
+    return ret;
+}
+
+var color = Chart.helpers.color;
+var config = {
+	//type: 'doughnut',
+	//type: 'pie',
+	type: 'radar',
+	//type: 'bar',
+	data: {
+        labels: [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+		datasets: [{
+			data: [0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			backgroundColor: [
+				window.chartColors.blue,
+				window.chartColors.grey1
+			],
+			borderColor: [
+				window.chartColors.blue,
+				window.chartColors.grey1
+			]
+		},
+		
+		{ 
+			data: [0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0],
+			backgroundColor: [
+				window.chartColors.green,
+				window.chartColors.grey2
+			],
+			borderColor: [
+				window.chartColors.green,
+				window.chartColors.grey2
+			] 
+		},
+		
+		{ 
+			data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0],
+			backgroundColor: [
+				window.chartColors.yellow,
+				window.chartColors.grey3
+			],
+			borderColor: [
+				window.chartColors.yellow,
+				window.chartColors.grey3
+			] 	 
+		}
+		]	 
+	},
+	//plugins: [ChartRough],
+	options: {
+		title: {
+			display: true,
+			text: 'Clock'
+		},
+		animation: {
+			animateScale: false,
+			animateRotate: false
+		},
+			tooltips: {enabled: false},
+    		hover: {mode: null}
+	}
+};
+
+//Chart.defaults.plugins.tooltip.enabled = false;
+Chart.defaults.global.defaultFontFamily = '"Indie Flower", cursive';
+Chart.defaults.global.defaultFontSize = 50;
+
+window.onload = function() {
+	
+	var ctx = document.getElementById('myChart').getContext('2d');
+	
+	var myFunc = setInterval(function() {
+
+		config.options.animation.animateScale = false;
+		config.options.animation.animateRotate = false;
+
+		var myDate = new Date(); //"Monday 1/1/2020 12:34:56");
+		//var myDateStr = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}); // 08/19/2020 (month and day with two digits)
+
+		var day = myDate.getDate();  
+		var month = myDate.getMonth() + 1;  
+		var year = myDate.getFullYear();  
+ 	    
+		var hours = myDate.getHours();  if (hours > 11) {  hours = hours - 12} ;
+ 	    var minutes = myDate.getMinutes(); 
+		var seconds = myDate.getSeconds();  
+
+		var tz = myDate.getTimezoneOffset();
+
+		//document.getElementById("nowTime").innerHTML = month + "/" + day + "/" + year + "<br/>" + hours + ":" + minutes + ":" + seconds; //myDate;  
+		//document.getElementById("nowTime").innerHTML = myDate;  
+
+		config.options.title.text =  myDate; //month + "/" + day + "/" + year + "   |   " + hours + ":" + minutes + ":" + seconds; // + " GMT " + tz; 
+
+		if (seconds == 0 ) {
+			config.options.animation.animateScale = false;
+			config.options.animation.animateRotate = false;
+		}
+		
+		secondsRatio = seconds / 0.6;
+		minutesRatio = minutes / 0.6 +  + (secondsRatio / 60);
+		hoursRatio = (( hours / 0.6 ) * 5 ) + (minutesRatio / 12);
+
+		//config.data.datasets[0].data = getSecondsDataSet(seconds);  
+		
+        //alert( "DATA SECS: " + config.data.datasets[0].data )
+        
+        config.data.datasets[0].data[0] = secondsRatio;
+        config.data.datasets[0].data[1] = 100-secondsRatio;
+
+		config.data.datasets[1].data[0] = minutesRatio;  
+		config.data.datasets[1].data[1] = 100-minutesRatio; 
+
+		config.data.datasets[2].data[0] = hoursRatio;  
+		config.data.datasets[2].data[1] = 100-hoursRatio; 
+
+ 
+		window.myChart = new Chart(ctx, config);
+	
+	}, 1000);
+};
+
+</script>
+
+</head>
+ 
+<body>
+</body>
+</html>
