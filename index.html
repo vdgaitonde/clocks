@@ -1,0 +1,47 @@
+<html>
+<head>
+	<title>Project: Time Machine</title>
+	<script src="dist/2.9.4/Chart.js"></script>
+	<script src="dist/utils.js"></script>
+
+	<div id="canvas-holder" style="width:40%">
+		<canvas id="chart-area"></canvas>
+	</div>
+	<button id="CurrentTime">Show Time</button>
+	<h4 id="TimeBox"></h4>
+	
+	<script>
+		
+		var chartColors = {
+			red: 'rgb(255, 99, 132)',
+			orange: 'rgb(255, 159, 64)',
+			yellow: 'rgb(255, 205, 86)',
+			green: 'rgb(75, 192, 192)',
+			blue: 'rgb(54, 162, 235)',
+			purple: 'rgb(153, 102, 255)',
+			grey: 'rgb(201, 203, 207)'
+		};
+		var colorNames = Object.keys(window.chartColors);
+		var showDate = false;
+
+		window.onload = function() {
+		};	
+
+		document.getElementById('CurrentTime').addEventListener('click', function() {
+			
+			if(showDate == true) {
+				document.getElementById('TimeBox').innerHTML = "";
+				document.getElementById('CurrentTime').innerHTML = "Show Time";
+				showDate = false;
+			} else {
+				document.getElementById('TimeBox').innerHTML = new Date();
+				document.getElementById('CurrentTime').innerHTML = "Hide Time";
+				showDate = true;
+			}
+			
+		});
+		 
+	</script>
+</head>
+<body></body>
+</html>
