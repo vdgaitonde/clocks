@@ -69,13 +69,13 @@ function getMinutesDataSet(x) {
 	 for( var i = 0; i < 12; i ++ ) {
 		ret[ i + 1 ] = 25; 
 
-           if( x > ((i + 1) * 5)  ||   x < (i * 5) ) {
+           if( x > ((i + 1) * 5)  ||   x  < (i * 5) ) {
                 ret [ i + 1] = 25;   
          } 
 	    	else { 
-              ret [i + 1] = ( (x % 5) + 1) * 20; 
+              ret [i + 1] = ( (x % 5) ) * 20; 
               ret[ i + 1] = 25 + (ret[ i + 1] / 2);
-              ret[ i ] = 25;
+              ret[ i ] = 75;
           }
 		
 	 }
