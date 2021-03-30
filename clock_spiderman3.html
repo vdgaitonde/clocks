@@ -1,0 +1,328 @@
+<html>
+<head>
+
+    <script src="dist/2.9.4/Chart.js"></script>
+    <script src="dist/2.9.4/Chart.min.js"></script>
+    <script src="dist/utils.js"></script>
+ 
+    <div align=top>
+		<p align="center" style="font-family: 'Indie Flower', cursive; font-size:50px; color:red;" id="clockname">  </p>
+		<p align="center" style="font-family: 'Indie Flower', cursive; font-size:50px; color:red;" id="clockdate">  </p>
+		<canvas id="myChart"></canvas>
+		<p align="center" style="font-family: 'Indie Flower', cursive; font-size:50px; color:black;" id="clocktime">  </p>
+		
+	</div>
+	
+<script>
+
+
+var chartColors = {
+	red: 'rgba(255, 0, 0, 0.99)',
+	orange: 'rgba(255, 159, 64, 0.2)',
+	yellow: 'rgba(255, 205, 86, 0.2)',
+	green: 'rgba(75, 192, 192, 0.2)',
+	blue: 'rgba(50, 100, 255, 0.99)',
+	purple: 'rgba(153, 102, 255, 0.2)',
+	grey: 'rgba(201, 203, 207, 0.2)',
+	grey1: 'rgba(201, 203, 207, 0.2)',
+	grey2: 'rgba(201, 213, 217, 0.2)',
+	grey3: 'rgba(201, 223, 227, 0.2)',
+	black: 'rgba(0, 0, 0, 0.5)',
+
+	white_100: 'rgba(255, 255, 255, 0.25)',
+	yellow_90: 'rgba(255, 205, 86, 0.75)',
+	red_90: 'rgba(255, 99, 99, 0.5)',
+	blue_90: 'rgba(54, 162, 235, 0.5)'
+};
+
+function randomScalingFactor() {
+	return Math.round(Math.random() * 100);
+}
+
+
+function getSecondsDataSet(x) {
+    
+    var ret = new Array(); 
+    
+	ret[ 0 ] = 100;
+	for( var i = 0; i < 59; i ++ ) {
+
+
+        if( x >= ((i + 1) ) ) ret[ i + 1] = 100;
+        else if ( x < (i ) )  ret [ i + 1] = 0;
+        else ret [ i + 1] = (x % 1) * 10; 
+
+		/*
+        ret[ i + 1] = 75 + (ret[ i + 1] / 4);
+
+		//special handling for 56 to 60s
+		if( x == 59 ) ret[ 0 ] = ( 75 ); 
+        */
+
+        ret[ i + 1] = 10 + (ret[ i + 1] / (100/90) );
+
+		//special handling for 56 to 60s
+		if( x == 59 ) ret[ 0 ] = ( 10 ); 
+    }
+
+    return ret;
+}
+
+function getMinutesDataSet(x) {
+     
+	 var ret = new Array(); 
+	  
+     for( var i = 0; i < 59; i ++ ) ret [ i ] = 25;
+
+	 for( var i = 0; i < 59; i ++ ) {
+		
+        if( x == i ) {
+            ret[ i ] = 80;
+            //ret[ i + 1 ] = 75;
+            //ret[ i - 1 ] = 75;
+        }  
+
+    }
+
+    if( x == 0 ) { 
+        ret[ 0 ] = 80;
+        //ret[ 1 ] = 75;
+        //ret[ 59 ] = 75;
+    }
+       
+	 
+	 return ret;
+ }
+
+ function getHoursDataSet(x) {
+ 	var ret = new Array(); 
+	 
+    for( var i = 0; i < 59; i ++ ) ret [ i ] = 20;
+
+	for( var i = 0; i < 59; i ++ ) {
+        if( i == (x*5) ) {
+            ret[ i ] = 60;
+        } 
+	 }
+
+     if( x == 12 ) { 
+        ret[ 0 ] = 60;
+        ret[ 1 ] = 20;
+        ret[ 59 ] = 20;
+    }
+
+ 	 return ret;
+ }
+
+var color = Chart.helpers.color;
+var config = {
+	//type: 'doughnut',
+	//type: 'pie',
+	type: 'radar',
+	//type: 'bar',
+
+	//labels: ['seconds', 'minutes', 'hours'],
+
+	data: {
+		
+		labels: ['12', '', '', '', '', '1', 
+        '', '', '', '', '2', 
+        '', '', '', '', '3', 
+        '', '', '', '', '4', 
+        '', '', '', '', '5', 
+        '', '', '', '', '6', 
+        '', '', '', '', '7', 
+        '', '', '', '', '8', 
+        '', '', '', '', '9', 
+        '', '', '', '', '10', 
+        '', '', '', '', '11', 
+        '', '', '', ''],
+		 
+        pointLabelFontSize : 50,
+        scaleFontSize: 50,
+
+		datasets: [{
+			data: [ ],
+			label: 'hours',
+			tension: 0,
+			spanGaps: 50,
+
+            
+
+
+			backgroundColor: [
+				window.chartColors.white_100,
+			],
+			borderColor: [
+				window.chartColors.black,
+			]
+		},
+		
+		{ 
+			data: [  ],
+			label: 'minutes',
+			spanGaps: 50,
+
+			backgroundColor: [
+				window.chartColors.blue_90,
+			],
+			borderColor: [
+				window.chartColors.blue,
+			] 
+		},
+		
+		{ 
+			data: [ ],
+			label: 'seconds',
+			tension: 0,
+			spanGaps: 50,
+
+			backgroundColor: [
+				window.chartColors.red_90,
+			],
+			borderColor: [
+				window.chartColors.red,
+			] 
+			 
+		}
+		],
+		
+		 
+	},
+	//plugins: [ChartRough],
+	 
+	options: {
+		//responsive: false,
+	
+		legend: false,
+		tooltips: {enabled: false},
+    	hover: {mode: null},
+       
+		//scale.ticks.stepSize: 25,
+
+		title: {
+			display: true,
+			text: '00:00:00'
+		},
+		animation: {
+			animateScale: false,
+			animateRotate: false
+		},
+		scale: {
+      ticks: {
+        display: true,
+        min: 0,
+        max: 100,
+        stepSize: 10,
+        fontSize: 25,
+		fontWeight: 10,
+        pointLabels: { fontSize: 50 },
+		padding: 0, 
+		
+		fontColor: "#000",
+		borderColor:  "#fff",
+		z: 0,
+		
+
+        callback: function(value, index, values) {
+			
+			var AXES_myDate = new Date(); 
+			var AXES_hours = AXES_myDate.getHours();  //if (AXES_hours > 11) {  AXES_hours = AXES_hours - 12 } ;
+ 	  	  	var AXES_minutes = AXES_myDate.getMinutes(); 
+			var AXES_seconds = AXES_myDate.getSeconds();  
+			
+			var str = ( AXES_hours-12 < 10 ? ("0"+(AXES_hours-12)):(AXES_hours-12)) + ":" +
+			( AXES_minutes < 10 ? "0"+AXES_minutes:AXES_minutes ) + ":" +
+			( AXES_seconds < 10 ? "0"+AXES_seconds:AXES_seconds ) + " " + ((AXES_hours<12)?"am":"pm");
+			
+
+          switch (value) {
+           
+			case 10:
+				return str;
+				break;		
+			 /*
+			 case 50:
+              return AXES_hours;
+              break;
+            case 75:
+              return AXES_minutes;
+              break;
+           
+			case 100:
+              return AXES_seconds;
+              break;
+			*/
+			default:
+              return '';
+          }
+        }
+      }},
+
+	scales: {
+			showLabelBackdrop: false,
+			stepSize: 25,
+
+      	  r: {
+          	  angleLines: {
+                display: false
+          	  },
+      	      suggestedMin: 0,
+          	  suggestedMax: 0
+      	  }
+   		 }
+		
+	}
+};
+
+//Chart.defaults.plugins.tooltip.enabled = false;
+Chart.defaults.global.defaultFontFamily = '"Indie Flower", cursive';
+Chart.defaults.global.defaultFontSize = 50;
+
+document.getElementById('clockname').innerHTML = "Spiderman Clock"; 
+//config.options.title.text =  myDate;  
+
+window.onload = function() {
+	
+
+	
+	var ctx = document.getElementById('myChart').getContext('2d');
+	window.myChart = new Chart(ctx, config);
+	var myFunc = setInterval(function() {
+	    window.myChart = new Chart(ctx, config);
+
+		//config.options.animation.animateScale = false;
+		//config.options.animation.animateRotate = false;
+
+		var myDate = new Date(); 
+		var hours = myDate.getHours();  if (hours > 11) {  hours = hours - 12 } ;
+ 	    var minutes = myDate.getMinutes(); 
+		var seconds = myDate.getSeconds();  
+		
+		config.options.title.text =  myDate;  
+
+		
+		config.data.datasets[2].data = getSecondsDataSet( seconds );
+		config.data.datasets[1].data = getMinutesDataSet( minutes );
+		config.data.datasets[0].data = getHoursDataSet( hours );
+		
+	
+		window.myChart.update(0);
+
+		//window.myChart = new Chart(ctx, config);
+	
+	}, 1000);
+};
+
+
+
+var colorNames = Object.keys(chartColors);
+ </script>
+
+
+</head>
+ 
+<body>
+	
+</body>
+</html>
