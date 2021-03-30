@@ -10,6 +10,7 @@
 		<br/><button id="clock_3rings">Show 3 Ring</button><br/>
 		<br/><button id="clock_spiderman">Show Spiderman - 1</button><br/>
 		<br/><button id="clock_spiderman2">Show Spiderman - 2</button><br/>
+		<br/><button id="clock_spiderman3">Show Spiderman - 3</button><br/>
 
 	</div>
 	
@@ -54,6 +55,12 @@
 			document.getElementById('TimeBox').innerHTML = "Clock: Spiderman 2";	 
 			document.getElementById('TimeBoxIFRAME').src = loc;		 
 		});
+
+		document.getElementById('clock_spiderman3').addEventListener('click', function() { 
+			var loc = "clock_spiderman3.html";
+			document.getElementById('TimeBox').innerHTML = "Clock: Spiderman 3";	 
+			document.getElementById('TimeBoxIFRAME').src = loc;		 
+		});
 	</script>
 </head>
 <body>
@@ -63,8 +70,8 @@
 				
 			</td>
 			<td width=80% height=100%> 
-				<h4 id="TimeBox"></h4> 
-				<iframe id="TimeBoxIFRAME" src="clock_1ring.html" width=100% height=100%/>
+				<iframe id="TimeBoxIFRAME" src="clock_1ring.html" width=100% height=100% width="100%" height="500" align=top frameborder="0" allowfullscreen></iframe>
+				<p id="TimeBox">Clock: 1 Ring</p> 
 			</td>
 		</tr>
 	</table>
