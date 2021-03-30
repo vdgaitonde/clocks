@@ -8,7 +8,9 @@
 		<h2>Project: Time Machine</h2>
 		<br/><button id="clock_1ring">Show 1 Ring</button><br/>
 		<br/><button id="clock_3rings">Show 3 Ring</button><br/>
-		<br/><button id="clock_spiderman">Show Spiderman</button><br/>
+		<br/><button id="clock_spiderman">Show Spiderman - 1</button><br/>
+		<br/><button id="clock_spiderman2">Show Spiderman - 2</button><br/>
+
 	</div>
 	
 	
@@ -41,10 +43,15 @@
 			document.getElementById('TimeBoxIFRAME').src = loc;		
 		});
 
-        document.getElementById('clock_spiderman').addEventListener('click', function() {
-				 
+        document.getElementById('clock_spiderman').addEventListener('click', function() { 
 			var loc = "clock_spiderman.html";
-			document.getElementById('TimeBox').innerHTML = "Clock: Spiderman";	 
+			document.getElementById('TimeBox').innerHTML = "Clock: Spiderman 1";	 
+			document.getElementById('TimeBoxIFRAME').src = loc;		 
+		});
+
+		document.getElementById('clock_spiderman2').addEventListener('click', function() { 
+			var loc = "clock_spiderman2.html";
+			document.getElementById('TimeBox').innerHTML = "Clock: Spiderman 2";	 
 			document.getElementById('TimeBoxIFRAME').src = loc;		 
 		});
 	</script>
