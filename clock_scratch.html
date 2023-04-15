@@ -42,7 +42,7 @@ var config = {
 			data: [0, 0],
 			backgroundColor: [
 				window.chartColors.blue,
-				window.chartColors.grey1
+				window.chartColors.black
 			],
 			borderColor: [
 				window.chartColors.black,
@@ -53,7 +53,7 @@ var config = {
 		{ data: [5, 95],
 			backgroundColor: [
 				window.chartColors.green,
-				window.chartColors.grey2
+				window.chartColors.black
 			],
 			borderColor: [
 				window.chartColors.black,
@@ -64,7 +64,7 @@ var config = {
 		{ data: [5, 95],
 			backgroundColor: [
 				window.chartColors.yellow,
-				window.chartColors.grey3
+				window.chartColors.black
 			],
 			borderColor: [
 				window.chartColors.black,
@@ -129,9 +129,12 @@ window.onload = function() {
 			config.options.animation.animateRotate = false;
 		}
 		
-		secondsRatio = seconds ;// 0.6;
-		minutesRatio = minutes / 0.6 +  + (secondsRatio / 60);
-		hoursRatio = (( hours / 0.6 ) * 5 ) + (minutesRatio / 12);
+		// Donut rings are represented as a ratio of a complete circle.
+		// 0 = empty circle, 100 = complete circle
+		// 
+		secondsRatio = seconds / 0.6;
+		minutesRatio = minutes / 0.6 + (secondsRatio / 60);  // The second part is for incremental sub-minute movement of the minutes hand 
+		hoursRatio = (( hours / 0.6 ) * 5 ) + (minutesRatio / 12); // The second part is for incremental sub-hour movement of the hour hand 
 
 		config.data.datasets[0].data[0] = secondsRatio;  
 		config.data.datasets[0].data[1] = 100-secondsRatio; 
