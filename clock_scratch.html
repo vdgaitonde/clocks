@@ -98,7 +98,7 @@ var config = {
 //Chart.defaults.plugins.tooltip.enabled = false;
 Chart.defaults.global.defaultFontFamily = '"Arial", cursive';
 Chart.defaults.global.defaultFontSize = 30;
-var test_prefix = "SCRATCH: ==>";
+var test_prefix = "SCRATCH: -->";
 
 window.onload = function() {
 	
@@ -111,21 +111,16 @@ window.onload = function() {
 		config.options.animation.animateScale = false;
 		config.options.animation.animateRotate = false;
 
-		var myDate = new Date(); //"Monday 1/1/2020 12:34:56");
-		//var myDateStr = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}); // 08/19/2020 (month and day with two digits)
-
+		var myDate = new Date(); 
 		var day = myDate.getDate();  
 		var month = myDate.getMonth() + 1;  
 		var year = myDate.getFullYear();  
  	    
 		var hours = myDate.getHours();  if (hours > 11) {  hours = hours - 12} ;
- 	    var minutes = myDate.getMinutes(); 
+ 	    	var minutes = myDate.getMinutes(); 
 		var seconds = myDate.getSeconds();  
 
 		var tz = myDate.getTimezoneOffset();
-
-		//document.getElementById("nowTime").innerHTML = month + "/" + day + "/" + year + "<br/>" + hours + ":" + minutes + ":" + seconds; //myDate;  
-		//document.getElementById("nowTime").innerHTML = myDate;  
 
 		config.options.title.text =  test_prefix + myDate; //month + "/" + day + "/" + year + "   |   " + hours + ":" + minutes + ":" + seconds; // + " GMT " + tz; 
 
@@ -153,76 +148,6 @@ window.onload = function() {
 };
 
 
-
-document.getElementById('randomizeData').addEventListener('click', function() {
-	config.data.datasets.forEach(function(dataset) {
-		dataset.data = dataset.data.map(function() {
-			return randomScalingFactor();
-		});
-	});
-	window.myChart.update();
-});
-
-/*
-var colorNames = Object.keys(chartColors);
-document.getElementById('addDataset').addEventListener('click', function() {
-	
-	var colorName = colorNames[config.data.datasets.length % colorNames.length];
-	var newColor = chartColors[colorName];
-	var newDataset = {
-		data: [],
-		backgroundColor: [],
-		borderColor: []
-	};
-
-	for (var index = 0; index < config.data.labels.length; ++index) {
-		newDataset.data.push(randomScalingFactor());
-
-		var colorName = colorNames[index % colorNames.length];
-		var newColor = window.chartColors[colorName];
-		newDataset.backgroundColor.push(newColor);
-		newDataset.borderColor.push(newColor);
-	}
-
-	config.data.datasets.push(newDataset);
-	window.myChart.update();
-});
-
-document.getElementById('removeDataset').addEventListener('click', function() {
-	config.data.datasets.pop();
-	window.myChart.update();
-});
-
-document.getElementById('addData').addEventListener('click', function() {
-	if (config.data.datasets.length > 0) {
-		var colorName = colorNames[config.data.datasets[0].data.length % colorNames.length];
-		var newColor = window.chartColors[colorName];
-
-		config.data.labels.push(colorName.charAt(0).toUpperCase() + colorName.slice(1));
-
-		config.data.datasets.forEach(function(dataset) {
-			dataset.data.push(randomScalingFactor());
-			dataset.backgroundColor.push(newColor);
-			dataset.borderColor.push(newColor);
-		});
-
-		window.myChart.update();
-	}
-});
-
-document.getElementById('removeData').addEventListener('click', function() {
-	config.data.labels.splice(-1, 1); // remove the label first
-
-	config.data.datasets.forEach(function(dataset) {
-		dataset.data.pop();
-		dataset.backgroundColor.pop();
-		dataset.borderColor.pop();
-	});
-
-	window.myChart.update();
-});
-*/
-	
 </script>
 
 
