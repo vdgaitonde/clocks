@@ -98,6 +98,7 @@ var config = {
 //Chart.defaults.plugins.tooltip.enabled = false;
 Chart.defaults.global.defaultFontFamily = '"Arial", cursive';
 Chart.defaults.global.defaultFontSize = 30;
+var test_prefix = "SCRATCH: ==>";
 
 window.onload = function() {
 	
@@ -126,7 +127,7 @@ window.onload = function() {
 		//document.getElementById("nowTime").innerHTML = month + "/" + day + "/" + year + "<br/>" + hours + ":" + minutes + ":" + seconds; //myDate;  
 		//document.getElementById("nowTime").innerHTML = myDate;  
 
-		config.options.title.text =  "scratch: " + myDate; //month + "/" + day + "/" + year + "   |   " + hours + ":" + minutes + ":" + seconds; // + " GMT " + tz; 
+		config.options.title.text =  test_prefix + myDate; //month + "/" + day + "/" + year + "   |   " + hours + ":" + minutes + ":" + seconds; // + " GMT " + tz; 
 
 		if (seconds == 0 ) {
 			config.options.animation.animateScale = false;
