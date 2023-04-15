@@ -123,7 +123,7 @@ window.onload = function() {
 		var tz = myDate.getTimezoneOffset();
 
 		//config.options.title.text =  test_prefix + myDate; //month + "/" + day + "/" + year + "   |   " + hours + ":" + minutes + ":" + seconds; // + " GMT " + tz; 
-		config.options.title.text =  month + "/" + day + "/" + year + "<br>" + hours + ":" + minutes + ":" + seconds + " GMT " + tz; 
+		config.options.title.text =  month + "/" + day + "/" + year + "\n" + hours + ":" + minutes + ":" + seconds + " GMT " + ((tz/60)<0?"-":"+") + tz/60; 
 		
 		if (seconds == 0 ) {
 			config.options.animation.animateScale = false;
