@@ -125,7 +125,9 @@ window.onload = function() {
 		config.options.title.text =  myDate.toLocaleDateString() + " \n " + myDate.toLocaleTimeString();
 		displayDate = myDate.toLocaleDateString();
 		displayTime = myDate.toLocaleTimeString();
-
+		displayDate.text = myDate.toLocaleDateString();
+		displayTime.text = myDate.toLocaleTimeString();
+		
 		if (seconds == 0 ) {
 			config.options.animation.animateScale = false;
 			config.options.animation.animateRotate = false;
@@ -166,10 +168,10 @@ window.onload = function() {
 				<table width=50% border=1>
 					<tr>
 						<tr border=1>
-							<td> <div id=displayTime> Time </div> </td>
+							<td> <div id="displayTime"> Time </div> </td>
 						</tr>
 						<tr border=1>
-							<td >  <div id=displayDate> Date </div>  </td>
+							<td >  <div id="displayDate"> Date </div>  </td>
 						</tr>
 					
 					</tr>
