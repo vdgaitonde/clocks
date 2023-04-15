@@ -123,6 +123,8 @@ window.onload = function() {
 		//config.options.title.text =  test_prefix + myDate; //month + "/" + day + "/" + year + "   |   " + hours + ":" + minutes + ":" + seconds; // + " GMT " + tz; 
 		//config.options.title.text =  month + "/" + day + "/" + year + "\n" + hours + ":" + minutes + ":" + seconds + " GMT " + ((tz/60)<0?"-":"+") + tz/60; 
 		config.options.title.text =  myDate.toLocaleDateString() + " \n " + myDate.toLocaleTimeString();
+		displayDate = myDate.toLocaleDateString();
+		displayTime = myDate.toLocaleTimeString();
 
 		if (seconds == 0 ) {
 			config.options.animation.animateScale = false;
@@ -160,17 +162,19 @@ window.onload = function() {
 	 <div>
 		<table width=100% border=1>
 			<tr  border=1>
-				<td width=50% rowspan=4> <canvas id="myChart"></canvas> </td>
-				<td width=50% height=25% > DATE </td>
-			</tr>
-			<tr height=25%  border=1>
-				<td> TIME </td>
-			</tr>
-			<tr height=25%  border=1>
-				<td> Temprature </td>
-			</tr>
-			<tr height=25%  border=1>
-				<td> City </td>
+				<td width=50% border=1> <canvas id="myChart"></canvas> </td>
+				<table width=50% border=1>
+					<tr>
+						<tr border=1>
+							<td> <div id=displayTime> Time </div> </td>
+						</tr>
+						<tr border=1>
+							<td >  <div id=displayDate> Date </div>  </td>
+						</tr>
+					
+					</tr>
+				</table>
+				
 			</tr>
 		 </table>
 				
